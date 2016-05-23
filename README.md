@@ -84,6 +84,12 @@ git push
 git checkout next
 ```
 
+### 8. Rolling back dependencies to synchronize the installation with 'next'
+
+```bash
+composer install
+```
+
 Authors
 -------
 ChimneyBro is developed in [plista GmbH](https://www.plista.com/).

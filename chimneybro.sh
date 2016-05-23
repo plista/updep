@@ -139,6 +139,9 @@ if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
   info_step "Switching back to the branch 'next'"
   exe git checkout next
 
+  info_step "Rolling back dependencies to synchronize the installation with 'next'"
+  exe composer install
+
   printf "\nFinished.\n\n"
 
 else

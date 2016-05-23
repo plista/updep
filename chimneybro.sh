@@ -46,16 +46,42 @@ function branch_name() {
   echo "${USER_NAME}/update_deps_$(date +%Y%m%d_%H%M)";
 }
 
+function die_if_service_file_notfound() {
+  if [[ ! -f $1 ]]; then
+    die "$1 file is not found." "This tool can only be run together with all files of its distributive."
+  fi
+}
+
+function display_version() {
+  die_if_service_file_notfound "CHANGELOG.md"
+  read -r FIRSTLINE < ./CHANGELOG.md
+  echo "Plista ChimneyBro v${FIRSTLINE:4}"
+}
+
+function display_help() {
+  die_if_service_file_notfound "USAGE"
+  less -FX USAGE
+}
+
+
 for INPUT_PARAM in "$@"
 do
 case $INPUT_PARAM in
-    --notags|--no-tags)
+    --notags|-t)
     PARAM_NOTAGS=1
     shift
     ;;
-    --push)
+    --push|-p)
     PUSH_WITHOUT_PROMPT=1
     shift
+    ;;
+    --version|-V)
+    display_version
+    exit 0
+    ;;
+    --help|-h)
+    display_help
+    exit 0
     ;;
     *)
     die "Unknown parameter '${INPUT_PARAM}'"
@@ -64,7 +90,7 @@ esac
 done
 
 if [[ ! -f ./composer.lock ]]; then
-    die 'compose.lock file is not found.' 'This tool can only be run the root folder of your project.'
+    die 'compose.lock file is not found.' 'This tool can only be run from the root folder of your project.'
 fi
 
 info_step "Preparing repository"

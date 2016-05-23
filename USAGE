@@ -1,0 +1,8 @@
+Usage:
+  chimneybro.sh [options]
+
+Options:
+  -h, --help                     Display this help message
+  -V, --version                  Display this application version
+  -p, --push                     Do not ask for confirmation to push the branch with updates.
+  -t, --notags                   Do not use hashtags in the commit message subject.

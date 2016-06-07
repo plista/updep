@@ -1,3 +1,7 @@
+### 1.0.0-alpha4 - 2016-06-07
+
+  * Fixed the bug when the help and version commands didn't work because the program directory was not read correctly. 
+
 ### 1.0.0-alpha3 - 2016-05-23
 
   * Added step "composer install" at the very end, after switching back to the "next" branch. 

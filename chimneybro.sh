@@ -11,6 +11,7 @@ UPDATE_COMMIT_SUBJECT='Update dependencies'
 UPDATE_COMMIT_TAGS='#upd'
 COLOR_NO='\033[0m'
 export INFO_STEP_COUNTER=0
+PROGRAM_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function info_exe() {
   echo "\$ $@";
@@ -53,14 +54,14 @@ function die_if_service_file_notfound() {
 }
 
 function display_version() {
-  die_if_service_file_notfound "CHANGELOG.md"
-  read -r FIRSTLINE < ./CHANGELOG.md
+  die_if_service_file_notfound "${PROGRAM_DIR}/CHANGELOG.md"
+  read -r FIRSTLINE < "${PROGRAM_DIR}/CHANGELOG.md"
   echo "Plista ChimneyBro v${FIRSTLINE:4}"
 }
 
 function display_help() {
-  die_if_service_file_notfound "USAGE"
-  less -FX USAGE
+  die_if_service_file_notfound "${PROGRAM_DIR}/USAGE"
+  less -FX "${PROGRAM_DIR}/USAGE"
 }
 
 

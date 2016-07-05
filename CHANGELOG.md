@@ -1,3 +1,8 @@
+### 1.0.0-beta1 - 2016-07-05
+
+  * The project was renamed to UpDep. The new script name is "updep.sh". 
+  * Added composer compatibility, so the tool maybe added to any project. 
+
 ### 1.0.0-alpha4 - 2016-06-07
 
   * Fixed the bug when the help and version commands didn't work because the program directory was not read correctly. 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This file is part of Plista ChimneyBro.
+# This file is part of Plista UpDep.
 #
 # (c) plista GmbH
 #
@@ -27,7 +27,7 @@ function info_step() {
   local COLOR_YELLOW='\033[33m'
 
   export INFO_STEP_COUNTER="$((INFO_STEP_COUNTER+1))"
-  printf "\n${COLOR_YELLOW}# Chimney.compUp, Step $INFO_STEP_COUNTER. ${COLOR_GREEN}$1${COLOR_NO}\n"
+  printf "\n${COLOR_YELLOW}# Plista UpDep, Step $INFO_STEP_COUNTER. ${COLOR_GREEN}$1${COLOR_NO}\n"
 }
 
 function die() {
@@ -56,7 +56,7 @@ function die_if_service_file_notfound() {
 function display_version() {
   die_if_service_file_notfound "${PROGRAM_DIR}/CHANGELOG.md"
   read -r FIRSTLINE < "${PROGRAM_DIR}/CHANGELOG.md"
-  echo "Plista ChimneyBro v${FIRSTLINE:4}"
+  echo "Plista UpDep v${FIRSTLINE:4}"
 }
 
 function display_help() {

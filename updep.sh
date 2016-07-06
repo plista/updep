@@ -42,7 +42,7 @@ function die() {
   exit
 }
 
-function branch_name() {
+function get_branch_name() {
   local USER_NAME=$(git config --list | grep user.email= | cut -f2 -d'=' | cut -f1 -d'@');
   echo "${USER_NAME}/update_deps_$(date +%Y%m%d_%H%M)";
 }
@@ -114,9 +114,11 @@ if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
   if [[ ! $CHANGELOG_NOTES ]]; then
     die 'No updated dependencies detected' 'Note you need to install https://github.com/pyrech/composer-changelogs plugin to Composer'
   fi
+  
+  BRANCH_NAME="$(get_branch_name)"
 
   info_step "Checking out a branch for a merge request"
-  exe git checkout -b "$(branch_name)"
+  exe git checkout -b "${BRANCH_NAME}"
 
   info_step "Commiting composer.lock"
   if [[ ! $PARAM_NOTAGS && $UPDATE_COMMIT_TAGS ]]; then
@@ -135,7 +137,7 @@ if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
   fi
 
   info_step "Pushing the changes to origin"
-  exe git push origin "$(branch_name)"
+  exe git push
 
   info_step "Switching back to the branch 'next'"
   exe git checkout next

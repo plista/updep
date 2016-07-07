@@ -137,7 +137,7 @@ if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
   fi
 
   info_step "Pushing the changes to origin"
-  exe git push
+  exe git push origin "${BRANCH_NAME}"
 
   info_step "Switching back to the branch 'next'"
   exe git checkout next

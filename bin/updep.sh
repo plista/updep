@@ -80,6 +80,10 @@ case $INPUT_PARAM in
     PARAM_NOTAGS=1
     shift
     ;;
+    --no-check|-n)
+    NO_CHECK=1
+    shift
+    ;;
     --push|-p)
     PUSH_WITHOUT_PROMPT=1
     shift
@@ -116,7 +120,9 @@ fi
 
 if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
 
-  check_composer
+  if [[ ! $NO_CHECK ]]; then
+    check_composer
+  fi;
 
   info_step "Installing already linked dependencies"
   exe "${COMPOSER_COMMAND} install"

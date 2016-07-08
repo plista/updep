@@ -57,10 +57,14 @@ Usage:
 Options:
   -h, --help                     Display this help message
   -V, --version                  Display this application version
-  -p, --push                     Do not ask for confirmation to push the branch with updates.
-  -t, --notags                   Do not use hashtags in the commit message subject.
-  --composer                     Use this as a fully-qualified Composer execution command (e.g. "php /usr/local/bin/composer.phar").
-                                 If not set the default global "composer" command will be used.
+  --composer                     Use this as a fully-qualified Composer execution command
+                                 Example: "php /usr/local/bin/composer.phar"
+                                 If not set the default global "composer" command will be used
+  -n, --no-check                 Do not check availability before execution. It makes the program faster
+                                 For instance, it will omit the checking if Composer can be executed.
+                                 Use this mode in predefined scripts where you do not expect such errors. 
+  -p, --push                     Do not ask for confirmation to push the branch with updates
+  -t, --notags                   Do not use hashtags in the commit message subject
 ```
 
 ## What does Plista UpDep do

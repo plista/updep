@@ -1,6 +1,20 @@
 {
     "name": "plista-dataeng/updep",
-    "description": "Developer's little helper",
+    "description": "Plista UpDep - a bash tool to make the process of updating Composer dependencies automated",
+    "keywords": ["dependency", "release"],
+    "authors": [
+      {
+          "name": "plista GmbH",
+          "homepage": "http://www.plista.com"
+      },
+      {
+          "name": "Alexander Palamarchuk",
+          "role": "Developer"
+      }
+    ],
     "license": "Apache 2.0",
-    "require": {}
+    "bin": ["bin/updep.sh"],
+    "require": {
+      "pyrech/composer-changelogs": "~1.5.0"
+    }
 }

@@ -1,3 +1,12 @@
+### 1.1.0-rc1 - 2016-07-08
+
+  * It is now possible to use "composer.phar" as well as before only "composer".
+  * Moved the main updep.sh script to "bin/" subfolder
+
+### 1.0.0-rc1 - 2016-07-07
+
+  * The project is now located on Github. 
+
 ### 1.0.0-beta1 - 2016-07-05
 
   * The project was renamed to UpDep. The new script name is "updep.sh". 

@@ -1,27 +1,56 @@
-Plista UpDep - Developer's little helper
-=========================================================================
+# Plista UpDep - Developer's little helper
 
 Plista UpDep is a console tool to ease maintaining projects which widely use Composer for managing dependencies.
 
 UpDep updates dependencies, commits and pushes them in a separate branch. This workflow is often lacked in continously built systems.
 
-Requirements
-------------
+## Requirements
+
 1. UpDep uses [Bash scripting language](https://www.gnu.org/software/bash/).
 2. UpDep is only tested in Linux.
 3. UpDep maintains only projects that have [Composer](https://getcomposer.org/) installed and configured.
-4. Composer must be [installed globally](https://getcomposer.org/doc/00-intro.md#globally), so be available to execute just as `composer ...` (without a full path).
+4. Composer must be [installed globally](https://getcomposer.org/doc/00-intro.md#globally), so be available to execute just as ``composer ...`` (without a full path).
 5. In the current implementation UpDep requires the "[composer-changelogs](https://github.com/pyrech/composer-changelogs)" plugin to be installed in your Composer.
 
-Installation
---------------------
+## Installation
+
+### Installation via Composer
+
+1. Add ``plista-dataeng/updep`` as a dependency to your project's ``composer.json`` file (change version to suit your version of Plista UpDep):
+    ```json
+        {
+            "require": {
+                "plista-dataeng/updep": "~1.0"
+            }
+        }
+    ```
+2. Download and install Composer:
+    ```bash
+        curl -s http://getcomposer.org/installer | php
+    ```
+
+3. Install your dependencies:
+    ```bash
+        php composer install --no-dev
+    ```
+
+4. Run the program from your project as
+    ```bash
+        ./vendor/bin/updep.sh
+    ```
+
+### Installation via downloading
+
 1. Download this repository and put to a folder you would like to execute the tool from.
 2. Properly configure [Composer](https://getcomposer.org/) and the "[composer-changelogs](https://github.com/pyrech/composer-changelogs)" plugin in your project.
-3. Change dir to the parent directory of your project where composer.lock is located.
-4. Run `/path/to/updep/updep.sh` as a bash script.
+3. Go to the parent directory of your project (the one you want to use Plista UpDep for) where composer.lock is located.
+4. Run as a bash script:
+    ```bash
+        /path/to/updep/bin/updep.sh``
+    ```        
 
-Usage
------
+## Usage
+
 ```
 Usage:
   updep.sh [options]
@@ -33,8 +62,7 @@ Options:
   -t, --notags                   Do not use hashtags in the commit message subject.
 ```
 
-What does Plista UpDep do
--------------------------
+## What does Plista UpDep do
 
 UpDep executes the following actions step-by-step:
 
@@ -90,13 +118,13 @@ git checkout next
 composer install
 ```
 
-Authors
--------
+## Authors
+
 UpDep is developed in [plista GmbH](https://www.plista.com/).
 
-License
--------
+## License
+
 UpDep is licensed under the Apache 2.0 License - see the LICENSE file for details.
 
-Acknowledgments
----------------
+## Acknowledgments
+

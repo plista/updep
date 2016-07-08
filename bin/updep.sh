@@ -12,6 +12,7 @@ UPDATE_COMMIT_TAGS='#upd'
 COLOR_NO='\033[0m'
 export INFO_STEP_COUNTER=0
 PROGRAM_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COMPOSER_COMMAND="composer"
 
 function info_exe() {
   echo "\$ $@";
@@ -19,7 +20,7 @@ function info_exe() {
 
 function exe() {
   info_exe $@
-  "$@"
+  $@
 }
 
 function info_step() {
@@ -48,21 +49,16 @@ function die_if_service_file_notfound() {
   fi
 }
 
-function get_composer() {
-  declare -a POSSIBLE_COMMANDS=("php composer.phar" "composer")
-  for COMPOSER_COMMAND in "${POSSIBLE_COMMANDS[@]}"
-  do
-    if type "${COMPOSER_COMMAND}" > /dev/null 2>&1; then
-      echo "${COMPOSER_COMMAND}"
-      exit 1
-    fi
-  done
-  die "cannot find Composer installed neither as \"composer.phar\", nor as \"composer\""
-}
-
 function get_branch_name() {
   local USER_NAME=$(git config --list | grep user.email= | cut -f2 -d'=' | cut -f1 -d'@');
-  echo "${USER_NAME}/update_deps_$(date +%Y%m%d_%H%M)";
+  echo "${USER_NAME}/update_deps_$(date +%Y%m%d_%H%M%S)";
+}
+
+function check_composer() {
+  export COMPOSER_COMMAND
+  if ! $($COMPOSER_COMMAND >/dev/null 2>&1); then
+    die "Cannot run composer as \"${COMPOSER_COMMAND}\""
+  fi
 }
 
 function display_version() {
@@ -86,6 +82,10 @@ case $INPUT_PARAM in
     ;;
     --push|-p)
     PUSH_WITHOUT_PROMPT=1
+    shift
+    ;;
+    --composer=*)
+    COMPOSER_COMMAND="${INPUT_PARAM#*=}"
     shift
     ;;
     --version|-V)
@@ -116,13 +116,13 @@ fi
 
 if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
 
-  COMPOSER_COMMAND="$(get_composer)"
+  check_composer
 
   info_step "Installing already linked dependencies"
-  exe "${COMPOSER_COMMAND}" install
+  exe "${COMPOSER_COMMAND} install"
 
   info_step "Updating dependencies"
-  info_exe "composer update"
+  info_exe "${COMPOSER_COMMAND} update"
 
   CHANGELOG_NOTES="$(${COMPOSER_COMMAND} update | awk '/Changelogs summary:/{y=1;next}y' | awk 'NF')"
   if [[ ! $CHANGELOG_NOTES ]]; then
@@ -139,7 +139,8 @@ if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
     UPDATE_COMMIT_SUBJECT="${UPDATE_COMMIT_SUBJECT} ${UPDATE_COMMIT_TAGS}"
   fi
   COMMMIT_MESSAGE=$(printf "${UPDATE_COMMIT_SUBJECT}\n\n${CHANGELOG_NOTES}")
-  exe git commit -m "${COMMMIT_MESSAGE}" ./composer.lock
+  info_exe "git commit -m '${UPDATE_COMMIT_SUBJECT} ...' -- ./composer.lock"
+  git commit -m "${COMMMIT_MESSAGE}" -- ./composer.lock
 
   if [[ ! $PUSH_WITHOUT_PROMPT ]]; then
     echo -e "\n\n"
@@ -157,7 +158,8 @@ if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
   exe git checkout next
 
   info_step "Rolling back dependencies to synchronize the installation with 'next'"
-  exe "${COMPOSER_COMMAND}" install
+  exe "${COMPOSER_COMMAND} install"
+
 
   printf "\nFinished.\n\n"
 

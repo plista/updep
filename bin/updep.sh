@@ -42,15 +42,27 @@ function die() {
   exit
 }
 
-function get_branch_name() {
-  local USER_NAME=$(git config --list | grep user.email= | cut -f2 -d'=' | cut -f1 -d'@');
-  echo "${USER_NAME}/update_deps_$(date +%Y%m%d_%H%M)";
-}
-
 function die_if_service_file_notfound() {
   if [[ ! -f $1 ]]; then
     die "$1 file is not found." "This tool can only be run together with all files of its distributive."
   fi
+}
+
+function get_composer() {
+  declare -a POSSIBLE_COMMANDS=("composer.phar" "composer")
+  for COMPOSER_COMMAND in "${POSSIBLE_COMMANDS[@]}"
+  do
+    if type "${COMPOSER_COMMAND}" > /dev/null 2>&1; then
+      echo "${COMPOSER_COMMAND}"
+      exit 1
+    fi
+  done
+  die "cannot find Composer installed neither as \"composer.phar\", nor as \"composer\""
+}
+
+function get_branch_name() {
+  local USER_NAME=$(git config --list | grep user.email= | cut -f2 -d'=' | cut -f1 -d'@');
+  echo "${USER_NAME}/update_deps_$(date +%Y%m%d_%H%M)";
 }
 
 function display_version() {
@@ -104,13 +116,15 @@ fi
 
 if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
 
+  COMPOSER_COMMAND="$(get_composer)"
+
   info_step "Installing already linked dependencies"
-  exe composer install
+  exe "${COMPOSER_COMMAND}" install
 
   info_step "Updating dependencies"
   info_exe "composer update"
 
-  CHANGELOG_NOTES="$(composer update | awk '/Changelogs summary:/{y=1;next}y' | awk 'NF')"
+  CHANGELOG_NOTES="$(${COMPOSER_COMMAND} update | awk '/Changelogs summary:/{y=1;next}y' | awk 'NF')"
   if [[ ! $CHANGELOG_NOTES ]]; then
     die 'No updated dependencies detected' 'Note you need to install https://github.com/pyrech/composer-changelogs plugin to Composer'
   fi
@@ -143,7 +157,7 @@ if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
   exe git checkout next
 
   info_step "Rolling back dependencies to synchronize the installation with 'next'"
-  exe composer install
+  exe "${COMPOSER_COMMAND}" install
 
   printf "\nFinished.\n\n"
 

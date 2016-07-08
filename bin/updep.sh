@@ -49,7 +49,7 @@ function die_if_service_file_notfound() {
 }
 
 function get_composer() {
-  declare -a POSSIBLE_COMMANDS=("composer.phar" "composer")
+  declare -a POSSIBLE_COMMANDS=("php composer.phar" "composer")
   for COMPOSER_COMMAND in "${POSSIBLE_COMMANDS[@]}"
   do
     if type "${COMPOSER_COMMAND}" > /dev/null 2>&1; then

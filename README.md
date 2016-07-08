@@ -9,7 +9,7 @@ UpDep updates dependencies, commits and pushes them in a separate branch. This w
 1. UpDep uses [Bash scripting language](https://www.gnu.org/software/bash/).
 2. UpDep is only tested in Linux.
 3. UpDep maintains only projects that have [Composer](https://getcomposer.org/) installed and configured.
-4. Composer must be [installed globally](https://getcomposer.org/doc/00-intro.md#globally), so be available to execute just as ``composer ...`` (without a full path).
+4. Composer must be [installed globally](https://getcomposer.org/doc/00-intro.md#globally), so be available to execute just as ``composer ...`` or ``php composer.phar ...`` (without a full path).
 5. In the current implementation UpDep requires the "[composer-changelogs](https://github.com/pyrech/composer-changelogs)" plugin to be installed in your Composer.
 
 ## Installation

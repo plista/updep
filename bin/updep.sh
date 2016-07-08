@@ -11,7 +11,19 @@ UPDATE_COMMIT_SUBJECT='Update dependencies'
 UPDATE_COMMIT_TAGS='#upd'
 COLOR_NO='\033[0m'
 export INFO_STEP_COUNTER=0
-PROGRAM_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+function get_program_dir() {
+  # From http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in/246128#246128
+  local SOURCE="${BASH_SOURCE[0]}"
+  while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+    DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+  done
+  echo "$( cd -P "$( dirname "$SOURCE" )" && pwd )/.."
+}
+PROGRAM_DIR="$(get_program_dir)"
+
 COMPOSER_COMMAND="composer"
 
 function info_exe() {

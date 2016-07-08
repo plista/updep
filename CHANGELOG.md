@@ -1,7 +1,13 @@
+### 1.2.0-rc1 - 2016-07-08
+
+  * Fixed errors of reading README when used as symlink.
+  * Introduced "--no-check" command parameter.
+  * Introduced "--composer" command parameter.
+
 ### 1.1.0-rc1 - 2016-07-08
 
   * It is now possible to use "composer.phar" as well as before only "composer".
-  * Moved the main updep.sh script to "bin/" subfolder
+  * Moved the main updep.sh script to "bin/" subfolder.
 
 ### 1.0.0-rc1 - 2016-07-07
 
@@ -27,4 +33,4 @@
 
 ### 1.0.0-alpha1 - 2016-05-13
 
-  * Initial release
+  * Initial release.

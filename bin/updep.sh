@@ -114,7 +114,7 @@ if git status | grep -q "Your branch is up-to-date with 'origin/next'."; then
   if [[ ! $CHANGELOG_NOTES ]]; then
     die 'No updated dependencies detected' 'Note you need to install https://github.com/pyrech/composer-changelogs plugin to Composer'
   fi
-  
+
   BRANCH_NAME="$(get_branch_name)"
 
   info_step "Checking out a branch for a merge request"

@@ -1,3 +1,7 @@
+### 1.2.0 - 2016-07-20
+
+  * Release version 1.2.0.
+
 ### 1.2.0-rc1 - 2016-07-08
 
   * Fixed errors of reading README when used as symlink.

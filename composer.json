@@ -1,5 +1,5 @@
 {
-    "name": "plista-dataeng/updep",
+    "name": "plista/updep",
     "description": "Plista UpDep - a bash tool to make the process of updating Composer dependencies automated",
     "keywords": ["dependency", "release"],
     "authors": [

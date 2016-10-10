@@ -1,3 +1,7 @@
+### 2.0.0 - 2016-10-10
+
+  * Moved the project on Packagist to "plista" (from "plista-dataeng") vendor.
+
 ### 1.2.0 - 2016-07-20
 
   * Release version 1.2.0.

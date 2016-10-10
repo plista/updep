@@ -15,11 +15,11 @@ UpDep updates dependencies, commits and pushes them in a separate branch. This w
 
 ### Installation via Composer
 
-1. Add ``plista-dataeng/updep`` as a dependency to your project's ``composer.json`` file (change version to suit your version of Plista UpDep):
+1. Add ``plista/updep`` as a dependency to your project's ``composer.json`` file (change version to suit your version of Plista UpDep):
     ```json
         {
             "require": {
-                "plista-dataeng/updep": "~1.0"
+                "plista/updep": "~2.0"
             }
         }
     ```
